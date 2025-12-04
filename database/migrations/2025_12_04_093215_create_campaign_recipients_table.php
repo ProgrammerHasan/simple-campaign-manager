@@ -12,6 +12,7 @@ return new class extends Migration {
             $table->foreignId('campaign_id')->constrained('campaigns');
             $table->foreignId('contact_id')->constrained('contacts');
             $table->string('status')->default('pending')->index();
+            $table->string('failed_reason')->nullable();
             $table->timestamps();
         });
     }
