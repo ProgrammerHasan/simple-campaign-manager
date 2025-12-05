@@ -16,6 +16,7 @@ class CampaignRecipient extends Model
       'contact_id',
       'status',
       'failed_reason',
+      'sent_at',
     ];
 
     protected $casts = [
