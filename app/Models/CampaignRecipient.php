@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Status;
+use App\Observers\CampaignRecipientObserver;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,5 +32,17 @@ class CampaignRecipient extends Model
     public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class);
+    }
+
+    protected static function booted(): void
+    {
+        parent::booted();
+    }
+
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        self::observe(CampaignRecipientObserver::class);
     }
 }
