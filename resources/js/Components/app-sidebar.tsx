@@ -10,17 +10,23 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { BookOpen, Folder, LayoutGrid, Megaphone } from 'lucide-react';
 import AppLogo from './app-logo';
+import campaigns from '@/routes/campaigns';
+import { dashboard } from '@/routes';
 
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
+    },
+    {
+        title: 'Campaigns',
+        href: campaigns.index(),
+        icon: Megaphone,
     },
 ];
 
