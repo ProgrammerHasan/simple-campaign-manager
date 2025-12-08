@@ -21,7 +21,12 @@ class CampaignController extends Controller
         $perPage = $request->integer('per_page', 10);
 
         $campaigns = Campaign::query()
-            ->withCount('recipients')
+            ->withCount([
+                'recipients',
+                'recipients as recipients_pending_count' => fn($query) => $query->where('status', 'pending'),
+                'recipients as recipients_sent_count' => fn($query) => $query->where('status', 'sent'),
+                'recipients as recipients_failed_count' => fn($query) => $query->where('status', 'failed'),
+            ])
             ->latest()
             ->paginate($perPage)->appends($request->except('page'));
 

@@ -6,6 +6,9 @@ export interface Campaign {
     body: string;
     created_at: string;
     recipients_count: number;
+    recipients_pending_count: number;
+    recipients_sent_count: number;
+    recipients_failed_count: number;
     recipients?: Recipient[] | null;
 }
 
