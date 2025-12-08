@@ -11,8 +11,8 @@ class CampaignRequest extends FormRequest
         return [
             'subject' => 'required|string|max:255',
             'body' => 'required|string',
-            'recipients' => 'required|array|min:1',
-            'recipients.*' => 'exists:contacts,id',
+            'recipient_ids' => 'required|array|min:1',
+            'recipient_ids.*' => 'exists:contacts,id',
         ];
     }
 
