@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\CreateCampaignAction;
 use App\Data\CreateCampaignData;
+use App\Enums\Status;
 use App\Http\Requests\CampaignRequest;
 use App\Models\Campaign;
 use App\Models\CampaignRecipient;
@@ -23,9 +24,9 @@ class CampaignController extends Controller
         $campaigns = Campaign::query()
             ->withCount([
                 'recipients',
-                'recipients as recipients_pending_count' => fn($query) => $query->where('status', 'pending'),
-                'recipients as recipients_sent_count' => fn($query) => $query->where('status', 'sent'),
-                'recipients as recipients_failed_count' => fn($query) => $query->where('status', 'failed'),
+                'recipients as recipients_pending_count' => fn($query) => $query->where('status', Status::PENDING),
+                'recipients as recipients_sent_count' => fn($query) => $query->where('status', Status::SENT),
+                'recipients as recipients_failed_count' => fn($query) => $query->where('status', Status::FAILED),
             ])
             ->latest()
             ->paginate($perPage)->appends($request->except('page'));
