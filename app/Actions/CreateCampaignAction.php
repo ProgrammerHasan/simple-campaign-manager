@@ -5,6 +5,7 @@ namespace App\Actions;
 use App\Data\CreateCampaignData;
 use App\Enums\Status;
 use App\Models\Campaign;
+use App\Models\CampaignRecipient;
 use DB;
 
 class CreateCampaignAction
@@ -18,11 +19,13 @@ class CreateCampaignAction
                 'created_by_user_id' => authUserId(),
             ]);
 
-            $pivotRows = collect($data->recipientIds)
-                ->mapWithKeys(fn ($id) => [$id => ['status' => Status::PENDING]])
-                ->toArray();
-
-            $campaign->recipients()->attach($pivotRows);
+            foreach ($data->recipientIds as $contactId) {
+                CampaignRecipient::create([
+                    'campaign_id' => $campaign->id,
+                    'contact_id' => $contactId,
+                    'status' => Status::PENDING,
+                ]);
+            }
 
             return $campaign;
         });
