@@ -9,7 +9,7 @@ export interface Campaign {
     recipients_pending_count: number;
     recipients_sent_count: number;
     recipients_failed_count: number;
-    recipients?: Recipient[] | null;
+    recipients?: CampaignRecipient[] | null;
 }
 
 export interface PaginatedResponse<T> {
@@ -21,7 +21,7 @@ export interface PaginatedResponse<T> {
     }[];
 }
 
-export interface Recipient {
+export interface CampaignRecipient {
     id: number;
     contact?: {
         id: number;
