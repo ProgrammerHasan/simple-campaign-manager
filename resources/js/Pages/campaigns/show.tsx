@@ -11,7 +11,7 @@ import AppLayout from '@/layouts/app-layout';
 import { Campaign, CampaignRecipient } from '@/types/campaign';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
-import { Status } from '@/enums/Status';
+import { getStatusLabel, Status } from '@/enums/Status';
 import campaigns from '@/routes/campaigns';
 
 interface Props {
@@ -128,7 +128,9 @@ export default function ShowCampaign({ campaign }: Props) {
                                                     recipient.status,
                                                 )}
                                             >
-                                                {recipient.status}
+                                                {getStatusLabel(
+                                                    recipient.status,
+                                                )}
                                             </Badge>
                                         </TableCell>
                                         <TableCell>
