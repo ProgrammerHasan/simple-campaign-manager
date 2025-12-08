@@ -1,0 +1,31 @@
+import { Status } from '@/enums/Status';
+
+export interface Campaign {
+    id: number;
+    subject: string;
+    body: string;
+    created_at: string;
+    recipients_count: number;
+    recipients?: Recipient[] | null;
+}
+
+export interface PaginatedResponse<T> {
+    data: T[];
+    links: {
+        url: string | null;
+        label: string;
+        active: boolean;
+    }[];
+}
+
+export interface Recipient {
+    id: number;
+    contact?: {
+        id: number;
+        name: string;
+        email: string;
+    } | null;
+    status: Status;
+    failed_reason?: string | null;
+    sent_at?: string | null;
+}
