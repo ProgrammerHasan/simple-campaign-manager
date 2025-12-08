@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Middleware\HandleAppearance;
 use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Illuminate\Session\Middleware\AuthenticateSession;
+use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Inertia\Inertia;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
@@ -15,19 +16,22 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
+
         $middleware->web(append: [
-            AuthenticateSession::class,
+            HandleAppearance::class,
             HandleInertiaRequests::class,
+            AddLinkHeadersForPreloadedAssets::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (Throwable $e) {
             if ($e instanceof HttpExceptionInterface) {
                 if ($e->getStatusCode() === 404) {
-                    return Inertia::render('Errors/Error404');
+                    return Inertia::render('errors/error404');
                 }
                 if ($e->getStatusCode() === 500) {
-                    return Inertia::render('Errors/Error500');
+                    return Inertia::render('errors/error500');
                 }
             }
             return null;
