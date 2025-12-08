@@ -19,10 +19,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     // Campaigns
-    Route::prefix('/campaigns')->as('campaigns.')->group(function () {
-        Route::get('/', [CampaignController::class, 'index'])->name('index');
-        Route::get('/create', [CampaignController::class, 'create'])->name('create');
-        Route::post('/', [CampaignController::class, 'store'])->name('store');
-        Route::get('/{campaign}', [CampaignController::class, 'show'])->name('show');
-    });
+    Route::resource('campaigns', CampaignController::class);
 });
