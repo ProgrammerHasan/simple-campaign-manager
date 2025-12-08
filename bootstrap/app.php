@@ -6,7 +6,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
-use Inertia\Inertia;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -27,12 +26,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (Throwable $e) {
             if ($e instanceof HttpExceptionInterface) {
-                if ($e->getStatusCode() === 404) {
-                    return Inertia::render('errors/error404');
-                }
-                if ($e->getStatusCode() === 500) {
-                    return Inertia::render('errors/error500');
-                }
+                return inertia("errors/error{$e->getStatusCode()}");
             }
             return null;
         });
