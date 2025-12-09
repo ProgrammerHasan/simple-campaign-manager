@@ -1,7 +1,7 @@
 import { dashboard, login, register } from '@/routes';
 import { SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/react';
-import { ArrowRight, Mail, Sparkles } from 'lucide-react';
+import { ArrowRight, LogIn, Mail, Sparkles, UserPlus } from 'lucide-react';
 
 export default function Welcome({
     canRegister = true,
@@ -58,16 +58,18 @@ export default function Welcome({
                         <div className="mt-7 flex flex-col items-center gap-4">
                             <Link
                                 href={login()}
-                                className="w-full rounded-lg bg-emerald-600 py-2.5 text-center font-medium text-white shadow-sm transition-all hover:bg-emerald-700"
+                                className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 py-2.5 text-center font-medium text-white shadow-sm transition-all hover:bg-emerald-700"
                             >
+                                <LogIn className="h-4 w-4" />
                                 Log In
                             </Link>
 
                             {canRegister && (
                                 <Link
                                     href={register()}
-                                    className="w-full rounded-lg border border-emerald-600 py-2.5 text-center font-medium text-emerald-700 transition-all hover:bg-emerald-50 dark:hover:bg-[#1d2b1d]"
+                                    className="flex w-full items-center justify-center gap-2 rounded-lg border border-emerald-600 py-2.5 text-center font-medium text-emerald-700 transition-all hover:bg-emerald-50 dark:hover:bg-[#1d2b1d]"
                                 >
+                                    <UserPlus className="h-4 w-4" />
                                     Create an Account
                                 </Link>
                             )}

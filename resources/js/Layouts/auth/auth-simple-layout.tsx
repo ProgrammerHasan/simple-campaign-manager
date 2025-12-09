@@ -28,7 +28,7 @@ export default function AuthSimpleLayout({
                     </Link>
 
                     <p className="mt-4 text-sm font-medium text-emerald-700 dark:text-emerald-400">
-                        Assalamu Alaikum
+                        Alhamdulillah, a blessed start.
                     </p>
                     <p className="text-[12px] text-muted-foreground dark:text-[#9ca39c]">
                         “In the name of Allah, the Most Gracious, the Most

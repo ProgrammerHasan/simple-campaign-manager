@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import AuthLayout from '@/layouts/auth-layout';
+import { UserPlus } from 'lucide-react';
 
 export default function Register() {
     return (
@@ -97,7 +98,7 @@ export default function Register() {
                                 data-test="register-user-button"
                             >
                                 {processing && <Spinner />}
-                                Create account
+                                <UserPlus className="h-4 w-4" /> Create account
                             </Button>
                         </div>
 

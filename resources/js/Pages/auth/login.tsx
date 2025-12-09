@@ -10,6 +10,7 @@ import { register } from '@/routes';
 import { store } from '@/routes/login';
 import { request } from '@/routes/password';
 import { Form, Head } from '@inertiajs/react';
+import { LogIn } from 'lucide-react';
 
 interface LoginProps {
     status?: string;
@@ -94,7 +95,7 @@ export default function Login({
                                 data-test="login-button"
                             >
                                 {processing && <Spinner />}
-                                Log in
+                                <LogIn className="h-4 w-4" /> Log in
                             </Button>
                         </div>
 
