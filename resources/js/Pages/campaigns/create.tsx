@@ -75,7 +75,7 @@ export default function CreateCampaign({ contacts }: Props) {
 
             <form
                 onSubmit={submitForm}
-                className="m-auto w-full max-w-4xl space-y-4 p-6"
+                className="w-full space-y-4 p-6 pt-2"
             >
                 <h1 className="text-2xl font-bold">Create Campaign</h1>
 
@@ -107,7 +107,7 @@ export default function CreateCampaign({ contacts }: Props) {
                     )}
                 </div>
 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mb-2">
                     <h2 className="text-lg font-semibold">
                         Contacts ({contacts.length}) / Selected:{' '}
                         {data.recipient_ids?.length}

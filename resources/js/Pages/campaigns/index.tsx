@@ -5,6 +5,7 @@ import { Head, Link } from '@inertiajs/react';
 import CampaignsTable from '@/components/campaigns/table';
 import campaigns from '@/routes/campaigns';
 import { Pagination } from '@/components/pagination';
+import { Plus } from 'lucide-react';
 
 interface Props {
     campaigns: PaginatedResponse<Campaign>;
@@ -22,7 +23,11 @@ export default function CampaignsIndex({ campaigns: campaignsData }: Props) {
                     <h1 className="text-xl font-semibold">Campaigns</h1>
 
                     <Button asChild>
-                        <Link href={campaigns.create()}>Create Campaign</Link>
+                        <Link href={campaigns.create()}>
+                            {' '}
+                            <Plus className="h-4 w-4" />
+                            Create Campaign
+                        </Link>
                     </Button>
                 </div>
 
