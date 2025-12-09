@@ -1,6 +1,7 @@
 # Simple Campaign Manager
 ### Alhamdulillah! This is a minimal yet fully functional email campaign manager built with *Laravel*, *React*, *InertiaJS*, and *shadcn/ui*.  
 ### It allows you to manage contacts, create campaigns, and track per-recipient delivery status in a clean, organized, and scalable way.
+<img src="simple-campaign-manager.png" alt="App Home" width="100%" />
 
 ## Features
 ````markdown
