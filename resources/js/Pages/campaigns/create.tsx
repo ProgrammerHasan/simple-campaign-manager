@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/pagination';
 import { Textarea } from '@/components/ui/textarea';
 import AppLayout from '@/layouts/app-layout';
+import {toast} from "react-toastify";
 import { Head, useForm } from '@inertiajs/react';
 import React, { useState } from 'react';
 import { Contact } from '@/types/contact';
@@ -64,9 +65,29 @@ export default function CreateCampaign({ contacts }: Props) {
         }
     };
 
-    const submitForm = (e: React.FormEvent) => {
+    const submitForm = async (e: React.FormEvent) => {
         e.preventDefault();
-        post(campaigns.store().url);
+        try {
+            await toast.promise(
+                new Promise<void>((resolve, reject) => {
+                    post(campaigns.store().url, {
+                        onSuccess: () => {
+                            resolve();
+                        },
+                        onError: () => {
+                            reject();
+                        },
+                    });
+                }),
+                {
+                    success: 'Campaign created and sending started.',
+                    error: 'Sending error!',
+                    pending: 'Sending...',
+                },
+            );
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     return (
