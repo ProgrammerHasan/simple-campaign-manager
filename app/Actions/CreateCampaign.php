@@ -19,21 +19,18 @@ class CreateCampaign
                 'created_by_user_id' => authUserId(),
             ]);
 
+            $campaignId = $campaign->id;
             $timestamp = now();
-            $rows = [];
-            foreach ($data->recipientIds as $contactId) {
-                $rows[] = [
-                    'campaign_id' => $campaign->id,
-                    'contact_id' => $contactId,
+            collect($data->recipientIds)
+                ->map(fn($recipientId) => [
+                    'campaign_id' => $campaignId,
+                    'contact_id' => $recipientId,
                     'status' => Status::PENDING,
                     'created_at' => $timestamp,
                     'updated_at' => $timestamp,
-                ];
-            }
-
-            foreach (array_chunk($rows, 1000) as $chunk) {
-                CampaignRecipient::insert($chunk);
-            }
+                ])
+                ->chunk(1000)
+                ->each(fn($chunk) => CampaignRecipient::insert($chunk->toArray()));
 
             return $campaign;
         });
