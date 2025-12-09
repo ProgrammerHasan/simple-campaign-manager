@@ -1,59 +1,113 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+````markdown
+# Simple Campaign Manager
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Alhamdulillah! This is a minimal yet fully functional email campaign manager built with *Laravel*, *React*, *InertiaJS*, and *shadcn/ui*.  
+It allows you to manage contacts, create campaigns, and track per-recipient delivery status in a clean, organized, and scalable way.  
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Pre-seeded contacts (name + email)
+- Contacts table with selection: single, multiple, or select all
+- Create Campaigns: enter subject & body, select recipients
+- Queue-based sending (simulated) per recipient
+- Track per-recipient status: `pending`, `sent`, `failed`
+- Campaign history & per-campaign delivery results
+- Clean architecture: Actions, Services, Queued Jobs
+- React components organized by page & reusable presentational components
+- Accessible, Material-style UI using *shadcn/ui*
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Architecture Choices
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- Separation of concerns
+  Controllers remain thin; `CreateCampaignAction` handles creation, `CampaignService` handles sending.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Pivot table
+  `campaign_recipients` stores delivery status and metadata (`failed_reason`, `sent_at`) for each recipient, making reporting simple.
 
-## Laravel Sponsors
+- Queued Jobs 
+  Each recipient is handled via a queued job (`SendCampaignEmailJob`), enabling retries and scaling. In this demo, sending is simulated safely.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- Inertia + React 
+  Provides server-side routing with modern React components. Pages are in `pages/`, reusable components in `components/`.
 
-### Premium Partners
+- UI  
+  *shadcn/ui + TailwindCSS* for accessible, consistent, and composable UI. Modern and clean design with Material style.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- Validation 
+  Laravel FormRequest ensures request data integrity before executing actions.
+````
+## Setup Instructions (Local)
+### 1. Clone Repository
 
-## Contributing
+```bash
+git clone git@github.com:ProgrammerHasan/simple-campaign-manager.git
+cd simple-campaign-manager
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 2. Install Backend Dependencies
 
-## Code of Conduct
+```bash
+composer install
+cp .env.example .env
+# configure DB credentials in .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 3. Install Frontend Dependencies
 
-## Security Vulnerabilities
+```bash
+npm install
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 4. Run Migrations & Seed Contacts
 
-## License
+```bash
+php artisan migrate
+php artisan db:seed --class=ContactSeeder
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 5. Configure Queue (for simulated sending)
+
+```bash
+# .env
+QUEUE_CONNECTION=database
+```
+
+### 6. Run Worker (in a separate terminal)
+
+```bash
+php artisan queue:work
+```
+
+> For quick development, set `QUEUE_CONNECTION=sync` (jobs run immediately without queue).
+
+### 7. Run Dev Servers
+
+```bash
+# All-in-one (recommended)
+composer run dev
+
+# Or separately:
+
+# Backend
+php artisan serve
+
+# Frontend
+npm run dev
+````
+> This makes it clear that `composer run dev` can start both backend and frontend simultaneously.
+
+### 8. Access the App
+
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+---
+> Alhamdulillah, the application is now running. May it be beneficial and easy to use, Insha’Allah.
+
+If you face any issues or need assistance, feel free to contact me on WhatsApp: [+8801625568604](https://wa.me/8801625568604?text=I%20am%20facing%20an%20issue%20with%20the%20Simple%20Campaign%20Manager%20project)
+
+May Allah make this project beneficial for all, Insha’Allah.
