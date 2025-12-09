@@ -8,7 +8,7 @@ use App\Models\Campaign;
 use App\Models\CampaignRecipient;
 use DB;
 
-class CreateCampaignAction
+class CreateCampaign
 {
     public function execute(CreateCampaignData $data): Campaign
     {

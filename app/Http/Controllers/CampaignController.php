@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\CreateCampaignAction;
+use App\Actions\CreateCampaign;
 use App\Data\CreateCampaignData;
 use App\Enums\Status;
 use App\Http\Requests\CampaignRequest;
@@ -48,9 +48,9 @@ class CampaignController extends Controller
     }
 
     public function store(
-        CampaignRequest      $request,
-        CreateCampaignAction $creator,
-        CampaignService      $sender
+        CampaignRequest $request,
+        CreateCampaign  $creator,
+        CampaignService $sender
     ): RedirectResponse
     {
         $data = CreateCampaignData::fromRequest($request);
